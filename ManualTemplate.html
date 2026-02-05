@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bedienungsanleitung Title</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/toolbar/prism-toolbar.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/line-numbers/prism-line-numbers.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/show-language/prism-show-language.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/treeview/prism-treeview.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/line-highlight/prism-line-highlight.css" />
+    <!-- Prism Core -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/prism.js"></script>
+    <!-- Languages -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-csharp.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-markup.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-css.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-javascript.min.js"></script>
+    <!-- Autoloader (lädt Sprachen bei Bedarf) -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <!-- Plugins -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/toolbar/prism-toolbar.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/show-language/prism-show-language.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/match-braces/prism-match-braces.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/inline-color/prism-inline-color.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/keep-markup/prism-keep-markup.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/treeview/prism-treeview.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/line-highlight/prism-line-highlight.min.js"></script>
+    <script type="module" src="functions.js"></script>
+</head>
+<body>
+    <div class="logo">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="200" height="100" viewBox="0 0 1742 931">
+            <path class="path1" d="M0 0h181v240h240v421H240V422H0V0z" fill="#fff" transform="translate(0,0)" />
+            <path class="path2" d="M0 0h181v182H0V0z" fill="#fff" transform="translate(0,481)" />
+            <path class="path3" d="M0 0h181v181H0V0z" fill="#fff" transform="translate(240,0)" />
+            <path class="path1" d="M0 0h182v661H0V0z" fill="#fff" transform="translate(540,0)" />
+            <path class="path2" d="M0 0h181v422H0V0z" fill="#fff" transform="translate(781,0)" />
+            <path class="path3" d="M0 0h661v181H0V0z" fill="#fff" transform="translate(1081,0)" />
+            <path class="path1" d="M0 0h181v420H0V0z" fill="#fff" transform="translate(1081,240)" />
+            <path class="path2" d="M0 0h181v420H0V0z" fill="#fff" transform="translate(1321,240)" />
+            <path class="path3" d="M0 0h181v420H0V0z" fill="#fff" transform="translate(1561,240)" />
+        </svg>
+    </div>
+    <div id="sidebar">
+        <button id="sidebarToggle">☰</button>
+        <div class="sidebar-content">
+            <h3>Steuerung</h3>
+            <button id="toggleAll" style="width:50%; padding:10px; cursor:pointer; background:#007acc; color:white; border:none; border-radius:4px;">Alle Kapitel auf-/zuklappen</button>
+            <hr style="margin:20px 0; border:0; border-top:1px solid #444;">
+            <h4>Ebenen Filter</h4>
+            <div id="levelFilters">
+                <label><input type="checkbox" checked data-lvl="lvl-0"> Ebene 0 (Wurzel)</label>
+                <label><input type="checkbox" checked data-lvl="lvl-1"> Ebene 1</label>
+                <label><input type="checkbox" checked data-lvl="lvl-2"> Ebene 2</label>
+                <label><input type="checkbox" checked data-lvl="lvl-3"> Ebene 3</label>
+                <label><input type="checkbox" checked data-lvl="lvl-4"> Ebene 4</label>
+                <label><input type="checkbox" checked data-lvl="lvl-5"> Ebene 5</label>
+                <label><input type="checkbox" checked data-lvl="lvl-6"> Ebene 6</label>
+            </div>
+            <h4>Anzeigetiefe (bis Ebene)</h4>
+            <div id="depthFilters" style="margin-bottom: 20px;">
+                <label><input type="radio" name="depth" data-max="0"> Ebene 0</label>
+                <label><input type="radio" name="depth" data-max="1"> Ebene 1</label>
+                <label><input type="radio" name="depth" data-max="2"> Ebene 2</label>
+                <label><input type="radio" name="depth" data-max="3"> Ebene 3</label>
+                <label><input type="radio" name="depth" data-max="4"> Ebene 4</label>
+                <label><input type="radio" name="depth" data-max="5"> Ebene 5</label>
+                <label><input type="radio" name="depth" data-max="6" checked> Alle (Ebene 6)</label>
+            </div>
+            <hr style="margin:20px 0; border:0; border-top:1px solid #444;">
+        </div>
+    </div>
+
+    <h1>Bedienungsanleitung: Titel</h1>
+
+    <details id="Inhaltsverzeichnis">
+        <summary>Inhaltsverzeichnis</summary>
+        <nav id="toc">
+            <h2>Inhaltsverzeichnis</h2>
+            <ul id="toc-list"></ul>
+        </nav>
+    </details>
+
+    <hr style="margin:20px 0; border:0; border-top:2px solid #007acc;">
+
+	<h2>Funktion</h2>
+	<p>Die Beschreibung der Funktion mit Referenz zum <code>Code</code> sind ebenso gut, wie <b>Texte in bold</b> oder auch <i>Texte in kursiv</i> zur Formatierung.</p>
+
+	<details  class="lvl-0" open>
+        <summary>Details (Level 0)</summary>
+	<div class="example-container">
+		<div class="example-box">
+			<strong>✅ Gut</strong>
+			<pre class="line-numbers"><code class="language-csharp">
+	string customerName;
+	int recordCount;
+	bool isDataLoaded;
+	List&lt;string&gt; activeUsers;
+				</code></pre>
+		</div>
+		<div class="example-box">
+			<strong>❌ Schlecht</strong>
+			<pre class="line-numbers"><code class="language-csharp">
+	string custname; // Zu kurz / abgekürzt
+	int i_count; // Ungarische Notation & Unterstrich
+	bool data; // Nicht aussagekräftig
+	int class; // Schlüsselwort
+	string first_Name; // Unterstrich im Namen
+	int 1stCounter; // Beginnt mit Zahl
+				</code></pre>
+		</div>
+	</div>
+    <details id="line-highlight"  class="lvl-1" open>
+        <summary>Line-Highlight (Level 1)</summary>
+        <pre id="code-xml-header" class="line-numbers">
+        <code class="language-xml">
+&lt;?xml version="1.0" encoding="utf-8" ?&gt;
+&lt;!DOCTYPE eagle SYSTEM "eagle.dtd"&gt;
+			</code>
+        </pre>
+        <p>
+            <span class="code-ref" data-target="code-xml-header" data-line="1">
+                Die erste Zeile im Codeblock.
+            </span>
+            <br />
+            <span class="code-ref" data-target="code-xml-header" data-line="2">
+                Die zweite Zeile im Codeblock.
+            </span>
+            <br />
+            <span class="code-ref" data-target="code-xml-header" data-line="1-2">
+                Beide Zeilen im Codeblock.
+            </span>
+        </p>
+    </details>
+
+    <details id="attribute-highlight"  class="lvl-2" open>
+        <summary>Attribut-Highlight (Level 2)</summary>
+        <pre id="code-xml-note" class="no-line-numbers">
+<code class="language-xml">&lt;note version="6.3" severity="warning" minversion="5.5"&gt;Text...&lt;/note&gt;</code>
+</pre>
+        <table>
+            <tr>
+                <th>Attribut</th>
+                <th>Typ</th>
+                <th>Beschreibung</th>
+                <th>Erf.</th>
+            </tr>
+            <tr class="code-ref" data-target="code-xml-note" data-attr="version">
+                <td>
+                    <code>version</code>
+                </td>
+                <td>
+                    <code>Real</code>
+                </td>
+                <td>Die EAGLE-Version, auf die sich die Kompatibilitätswarnung bezieht.</td>
+                <td>Ja</td>
+            </tr>
+            <tr class="code-ref" data-target="code-xml-note" data-attr="severity">
+                <td>
+                    <code>severity</code>
+                </td>
+                <td>
+                    <code>String</code>
+                </td>
+                <td>Schweregrad der Kompatibilitätswarnung.</td>
+                <td>Ja</td>
+            </tr>
+            <tr class="code-ref" data-target="code-xml-note" data-attr="minversion">
+                <td>
+                    <code>minversion</code>
+                </td>
+                <td>
+                    <code>Real</code>
+                </td>
+                <td>Die minimale EAGLE-Version, auf die sich die Warnung bezieht.</td>
+                <td>Nein</td>
+            </tr>
+        </table>
+        <br />
+        <span class="code-ref" data-target="code-xml-note" data-attr="version">
+            Der &lt;version&gt;-Tag per Text referenziert.
+        </span>
+    </details>
+
+    <div class="section">
+        <h2>Überschriften zweiter Ordnung</h2>
+        <h3>Überschriften dritter Ordnung</h3>
+        <h4>Überschriften vierter Ordnung</h4>
+
+        <ol>
+            <li>
+                <strong>Listen mit Aufzählung</strong>
+
+                <pre>
+                <code class="language-csharp">// Beispielcode C#
+Console.WriteLine("Hallo Welt!");</code>
+				</pre>
+            </li>
+            <li>
+                <strong>Codebeispiele</strong>
+                <pre>
+                <code class="language-bash">@echo off
+set source=%cd%
+set destination=%source%\..\..\bin\Debug
+set exclude=%source%\exclude.txt
+
+xcopy "%source%\*" "%destination%" /E /Y /EXCLUDE:%exclude%
+
+pause</code>
+				</pre>
+            </li>
+            <li>
+                <strong>Codebeispiel ohne Formatierung</strong>
+                <pre>
+                <code>=== Start Programm ===
+Hauptthread: Benutzeraktion 'Button geklickt' wird verarbeitet...
+Hauptthread: Kann sofort weiterarbeiten!
+Hauptthread: Benutzeraktion 'Seite gewechselt' wird verarbeitet...
+Hauptthread: Kann sofort weiterarbeiten!
+Hauptprogramm macht andere Sachen...
+  Hintergrund: Beginne Logging für 'Button geklickt'
+  Hintergrund: Beginne Logging für 'Seite gewechselt'
+  // ... 2 Sekunden Pause ...
+  Hintergrund: Log für 'Button geklickt' erfolgreich geschrieben
+  Hintergrund: Log für 'Seite gewechselt' erfolgreich geschrieben
+=== Ende Programm ===</code>
+				</pre>
+            </li>
+        </ol>
+
+        <p>Link zu Kapitel:</p>
+        <a href="#attribute-highlight" class="nav-icon" title="Gehe zu attribute-highlight">❐</a>
+    </div>
+
+	<div class="section">
+		<div class="image-container" onclick="toggleImageExpand(this)">
+			<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+			  <rect x="250" y="150" width="300" height="300" fill="#e0e0e0" stroke="#333" stroke-width="2" />
+			  <text x="400" y="300" font-family="Arial" font-size="32" fill="#000" text-anchor="middle" dominant-baseline="middle">
+				Testbild
+			  </text>
+			</svg>
+		</div>
+	</div>
+	</details>	
+
+    <div class="mermaid">
+        ---
+        config:
+        theme: neo-dark
+        ---
+        flowchart TD
+        A(["Start"])
+        A --> B{"Decision"}
+        B --> C["Option A"]
+        B --> D["Option B"]
+    </div>
+
+    <div class="mermaid">
+        ---
+        config:
+        theme: neo-dark
+        ---
+        flowchart TD
+        A(["Start"])
+        A --> B{"Decision"}
+        B --> C["Option A"]
+        B --> D["Option B"]
+
+        style A fill:#242424,stroke:#333,stroke-width:3px,color:#fff
+        style B fill:#123123,stroke:#333,stroke-width:1px,color:grey
+        style C fill:#242424,stroke:#333,stroke-width:1px,color:#fff
+        style D fill:#242424,stroke:#333,stroke-width:1px,stroke-dasharray: 3 3,color:#fff
+    </div>
+
+    <details id="Elemente" open>
+        <summary>Elemente</summary>
+        <pre class="no-line-numbers" id="eagle-tree">
+        <p>Treeview einträge in einfachen anführungszeichen werden zu links die zu gleichnamigen Kapiteln verlinken.</p>
+        <code class="language-treeview">
+            'eagle' [version]
+            ├── 'compatibility'/
+            │   └── note [version, severity, minversion]
+            ├── drawing/
+            │   ├── settings/
+            │   │   └── setting [alwaysvectorfont, verticaltext]
+            │   ├── grid [distance, unitdist, unit, style, multiple, display, altdistance, altunitdist, altunit]
+            │   ├── layers/
+            │   │   └── layer [number, name, color, fill, visible, active]
+            │   ├── library [name]
+            │   └── board/
+            └── compatibility/ (optional am Ende)
+        </code>
+    </pre>
+    </details>
+	
+    <details id="diagramms">
+        <summary>Diagramms</summary>
+        <div class="mermaid">
+            classDiagram
+            class Interpreter {
+            +ExecuteSteps(startIndex)
+            +SkipInactiveSteps()
+            +ApplyControlStructures()
+            +HandleRepetitions()
+            +HandleFinallySteps()
+            }
+
+            class TestStep {
+            +bool Active
+            +bool Force
+            +bool Finally
+            +Condition JumpCondition
+            +int JumpBackDistance
+            +Result Execute()
+            }
+
+            Interpreter --> "*" TestStep : führt aus
+        </div>
+
+        <div class="mermaid">
+            %%{
+            init: {
+            "theme": "base",
+            "themeVariables": {
+            "primaryColor": "#242424",
+            "primaryBorderColor": "#333",
+            "primaryTextColor": "#fff",
+
+            "secondaryColor": "#1a1a1a",
+            "secondaryBorderColor": "#333",
+            "secondaryTextColor": "#ccc",
+
+            "tertiaryColor": "#2a2a2a",
+            "tertiaryBorderColor": "#444",
+            "tertiaryTextColor": "#fff",
+
+            "lineColor": "#00aaff",
+            "fontFamily": "Arial",
+
+            "background": "#1a1a1a"
+            }
+            }
+            }%%
+            sequenceDiagram
+            autonumber
+            participant U as Admin-User
+            participant PE as Projekt-Explorer
+            participant D as Dialog "Neues Projekt"
+            participant FS as Dateisystem
+
+            U->>PE: Klick auf "Neues Projekt"
+            PE->>D: Öffne Eingabedialog
+            D-->>U: Eingabe Projektnummer & Beschreibung
+            U->>D: OK oder Cancel
+
+            alt OK gewählt
+            D-->>PE: Projektdaten
+            PE->>PE: Projekt wird logisch angelegt
+
+            rect rgb(42,42,42)
+            PE->>FS: Prüfe ob Projektordner existiert
+            FS-->>PE: Existiert? (ja/nein)
+
+            alt Ordner existiert
+            PE-->>U: Meldung "Projektordner existiert bereits"
+            else Ordner existiert nicht
+            PE->>FS: Erstelle Projektordner
+            FS-->>PE: Bestätigung
+            end
+            end
+
+            rect rgb(36,36,36)
+            PE->>FS: Prüfe ob Prüfschrittdatei existiert
+            FS-->>PE: Existiert? (ja/nein)
+
+            alt Datei existiert
+            PE-->>U: Meldung "Prüfschrittdatei existiert bereits"
+            else Datei existiert nicht
+            PE->>FS: Lege Prüfschrittdatei an
+            FS-->>PE: Bestätigung
+            end
+            end
+
+            rect rgb(26,26,26)
+            PE->>FS: Prüfe ob Unterordner existieren
+            FS-->>PE: Existieren? (ja/nein)
+
+            alt Unterordner existieren
+            PE-->>U: Meldung "Unterordner existieren bereits"
+            else Unterordner existieren nicht
+            PE->>FS: Erstelle Unterordner
+            FS-->>PE: Bestätigung
+            end
+            end
+
+            PE-->>U: Neues Projekt mit Struktur sichtbar
+
+            else Cancel gewählt
+            D-->>PE: Abbruch
+            PE-->>U: Projektanlage abgebrochen
+            end
+
+        </div>
+    </details>
+	
+	<div class="section">
+		
+		Tabelle:
+
+		<table border="1" cellpadding="8" cellspacing="0">
+			<thead>
+				<tr>
+					<th>Jahr</th>
+					<th>C# Version</th>
+					<th>.NET Framework / Runtime</th>
+					<th>Bemerkungen</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>2002</td>
+					<td>C# 1.0</td>
+					<td>.NET Framework 1.0</td>
+					<td>Grundlegende Sprachelemente</td>
+				</tr>
+				<tr>
+					<td>2003</td>
+					<td>C# 1.2</td>
+					<td>.NET Framework 1.1</td>
+					<td>Kleinere Ergänzungen</td>
+				</tr>
+				<tr>
+					<td>2005</td>
+					<td>C# 2.0</td>
+					<td>.NET Framework 2.0</td>
+					<td>Generics, Nullable Types, Iterators</td>
+				</tr>
+			</tbody>
+		</table>
+	
+	</div>
+
+	<div class="section">
+
+		<div class="image-container" onclick="toggleImageExpand(this)">
+			<img src="Ordnername/Dateiname.PNG" alt="Alternativtext">
+		</div>
+		
+	</div>
+
+	<details id="Ebenen">
+		<summary>Erste Ebene</summary>
+		<p>Inhalt der ersten Ebene.</p>
+		<details>
+			<summary>Zweite Ebene</summary>
+			<p>Inhalt der zweiten Ebene.</p>
+			<details>
+				<summary>Dritte Ebene</summary>
+				<p>Inhalt der dritten Ebene.</p>
+			</details>
+		</details>
+	</details>
+
+
+</body>
+</html>

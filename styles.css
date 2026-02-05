@@ -1,0 +1,463 @@
+        /* ==========================================================================
+           1. BASIS-STYLING & LAYOUT
+           ========================================================================== */
+        body {
+            background: #1a1a1a;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            padding: 20px;
+            transition: margin-left 0.3s ease;
+            margin-left: 60px; /* Standardplatz für den Sidebar-Toggle */
+        }
+
+            /* Verschiebt Inhalt, wenn Sidebar offen ist */
+            body.sidebar-open {
+                margin-left: 280px;
+            }
+
+        h2 {
+            color: #fff;
+        }
+
+        h3 {
+            color: #ccc;
+            border-bottom: 1px solid #444;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+
+        a {
+            color: #66b2ff;
+            text-decoration: none;
+        }
+
+            a:hover {
+                text-decoration: underline;
+            }
+
+        .example-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 15px
+        }
+
+        .example-box {
+            flex: 1;
+            min-width: 350px
+        }
+
+        /* ==========================================================================
+           2. SIDEBAR & STEUERUNG
+           ========================================================================== */
+        #sidebar {
+            --sidebar-width: 250px; /* Gesamte Breite der Sidebar */
+            --sidebar-collapsed-out: 20px; /* Wie viel im eingeklappten Zustand rausstehen soll */
+
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: var(--sidebar-width);
+            background: #242424;
+            border-right: 2px solid #007acc;
+            z-index: 1000;
+            /* Berechnung: Schiebe Sidebar so weit nach links, dass nur der gewünschte Rest bleibt */
+            transform: translateX(calc(-1 * (var(--sidebar-width) - var(--sidebar-collapsed-out))));
+            transition: transform 0.3s ease;
+            padding: 15px;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+            overflow-y: auto;
+        }
+
+            /* Klasse wird per JS geschaltet */
+            #sidebar.sidebar-visible {
+                transform: translateX(0);
+            }
+
+        #sidebarToggle {
+            position: absolute;
+            right: 5px;
+            top: 10px;
+            background: #007acc;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+            #sidebarToggle:hover {
+                background: #00aaff;
+            }
+
+        .sidebar-content h3, .sidebar-content h4 {
+            margin-top: 0;
+            color: #00aaff;
+        }
+
+        #levelFilters label {
+            display: block;
+            margin: 8px 0;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        #depthFilters label {
+            display: block;
+            margin: 5px 0;
+            cursor: pointer;
+            font-size: 0.85em;
+            color: #bbb;
+        }
+
+        #depthFilters input[type="radio"] {
+            margin-right: 10px;
+            accent-color: #00aaff; /* Die Farbe der Radios an dein Design anpassen */
+        }
+
+        #depthFilters label:hover {
+            color: #fff;
+        }
+        /* ==========================================================================
+           3. INHALTSVERZEICHNIS (TOC) & BADGES
+           ========================================================================== */
+        #toc {
+            background: #242424;
+            border-left: 5px solid #007acc;
+            border-right: 1px solid #333; /* Kombiniert aus altem border-block */
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
+            padding: 15px 25px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+
+            #toc ul {
+                list-style: none;
+                padding-left: 0;
+            }
+
+            #toc li {
+                margin: 5px 0;
+            }
+
+                #toc li.h3 {
+                    margin-left: 1.5rem;
+                }
+
+                #toc li.h4 {
+                    margin-left: 3rem;
+                }
+
+        .lvl-badge {
+            display: inline-block;
+            font-size: 10px;
+            padding: 1px 5px;
+            border-radius: 3px;
+            margin-right: 8px;
+            vertical-align: middle;
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+            /* Badge Farben */
+            .lvl-badge.lvl-0 {
+                background: #ff4500;
+            }
+
+            .lvl-badge.lvl-1 {
+                background: #d2691e;
+            }
+
+            .lvl-badge.lvl-2 {
+                background: #008080;
+            }
+
+            .lvl-badge.lvl-3 {
+                background: #4682b4;
+            }
+
+            .lvl-badge.lvl-4 {
+                background: #6a5acd;
+            }
+
+            .lvl-badge.lvl-5 {
+                background: #2e8b57;
+            }
+
+            .lvl-badge.lvl-6 {
+                background: #808080;
+            }
+
+            .lvl-badge.lvl-7 {
+                background: #696969;
+            }
+
+            .lvl-badge.lvl-8 {
+                background: #505050;
+            }
+
+            .lvl-badge.lvl-9 {
+                background: #383838;
+            }
+
+            .lvl-badge.lvl-10 {
+                background: #202020;
+            }
+
+        /* ==========================================================================
+           4. HIERARCHIE & DETAILS
+           ========================================================================== */
+        details {
+            background: #242424;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #333;
+        }
+
+        summary {
+            font-weight: bold;
+            cursor: pointer;
+            color: #00aaff;
+        }
+
+        /* Automatische Einrückung basierend auf LVL-Klassen */
+        details[class*="lvl-"] {
+            --indent-step: 25px;
+            margin-left: calc(var(--lvl) * var(--indent-step));
+            border-left: 3px solid #444; /* Optische Trennung der Ebenen */
+        }
+
+        /* Definition der Farben pro Ebene (Border der Kapitel) */
+        .lvl-0 {
+            --lvl: 0;
+            border-left-color: #ff4500 !important;
+        }
+        /* OrangeRed */
+        .lvl-1 {
+            --lvl: 1;
+            border-left-color: #d2691e !important;
+        }
+        /* Chocolate */
+        .lvl-2 {
+            --lvl: 2;
+            border-left-color: #008080 !important;
+        }
+        /* Teal */
+        .lvl-3 {
+            --lvl: 3;
+            border-left-color: #4682b4 !important;
+        }
+        /* SteelBlue */
+        .lvl-4 {
+            --lvl: 4;
+            border-left-color: #6a5acd !important;
+        }
+        /* SlateBlue */
+        .lvl-5 {
+            --lvl: 5;
+            border-left-color: #2e8b57 !important;
+        }
+        /* SeaGreen */
+        .lvl-6 {
+            --lvl: 6;
+            border-left-color: #808080 !important;
+        }
+        /* Gray */
+        .lvl-7 {
+            --lvl: 7;
+            border-left-color: #696969 !important;
+        }
+        /* DimGray */
+        .lvl-8 {
+            --lvl: 8;
+            border-left-color: #505050 !important;
+        }
+        /* Dimmer Gray */
+        .lvl-9 {
+            --lvl: 9;
+            border-left-color: #383838 !important;
+        }
+        /* Even Dimmer Gray */
+        .lvl-10 {
+            --lvl: 10;
+            border-left-color: #202020 !important;
+        }
+
+
+        /* ==========================================================================
+           5. TABELLEN
+           ========================================================================== */
+        table {
+            border-collapse: collapse;
+            background: #242424;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #333;
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background: #2a2a2a;
+        }
+
+        tr:hover {
+            background: #333;
+        }
+
+        /* Spezial-Tabelle: Compact */
+        table.compact-table td {
+            padding: 6px;
+        }
+
+        table.compact-table tr:nth-child(even) {
+            background: inherit;
+        }
+
+        table.compact-table tr:has(input[type="checkbox"]:checked) td.text {
+            color: #00ff80;
+            font-weight: bold;
+        }
+
+        /* ==========================================================================
+           6. CODE & REFERENZEN
+           ========================================================================== */
+        pre {
+            background: #242424;
+            padding: 15px;
+            border-left: 5px solid #333;
+            overflow-x: auto;
+            position: relative;
+            border-radius: 5px;
+            white-space: pre;
+        }
+            /* Container für die Zeilen-Highlights */
+            pre[class*="language-"].line-numbers {
+                position: relative;
+                padding-left: 3.8em; /* Platz für Prism Line Numbers */
+            }
+
+        .code-highlight-layer {
+            position: absolute;
+            top: var(--code-top-offset);
+            left: var(--code-left-offset);
+            pointer-events: none;
+        }
+
+        .code-highlight {
+            position: absolute;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.08);
+            border-left: 3px solid #f08d49;
+        }
+
+        .code-inline-highlight {
+            position: absolute;
+            background: rgba(240, 141, 73, 0.25);
+            border-left: 3px solid #f08d49;
+            border-radius: 3px;
+            pointer-events: none;
+        }
+
+        .code-ref {
+            cursor: pointer;
+        }
+
+            .code-ref:hover {
+                text-decoration: underline;
+            }
+
+        /* KEINE Unterstreichung in Tabellen */
+        table .code-ref:hover {
+            text-decoration: none;
+        }
+
+        .nav-icon {
+            display: inline-block;
+            width: 24px;
+            height: 18px;
+            line-height: 18px;
+            text-align: center;
+            background-color: #007acc;
+            color: #fff !important;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+
+        /* ==========================================================================
+           7. BILDER, LOGO & ANIMATIONEN
+           ========================================================================== */
+        .logo {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            width: 200px;
+        }
+
+        @keyframes flicker {
+            0%, 30%, 60%, 90% {
+                opacity: 0;
+                fill: black;
+            }
+
+            10%, 40%, 70%, 100% {
+                opacity: 1;
+                fill: white;
+            }
+
+            20%, 50%, 80% {
+                opacity: 0.8;
+                fill: #ccc;
+            }
+        }
+
+        .path1 {
+            animation: flicker 1s linear forwards;
+        }
+
+        .path2 {
+            animation: flicker 2s linear forwards;
+        }
+
+        .path3 {
+            animation: flicker 1.5s linear forwards;
+        }
+
+        .image-container {
+            max-width: 300px;
+            border-radius: 8px;
+            cursor: zoom-in;
+            transition: 0.4s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,.3);
+        }
+
+            .image-container.expanded {
+                max-width: 80%; /* Verbessert gegenüber 50% */
+                transform: scale(1.05);
+                cursor: zoom-out;
+                display: block;
+                margin: 20px auto;
+            }
+
+            .image-container img, .image-container svg {
+                width: 100%;
+                height: auto;
+                display: block;
+                transition: .3s ease
+            }

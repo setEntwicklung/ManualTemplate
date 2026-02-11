@@ -4,6 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bedienungsanleitung Title</title>
+	<script>
+		(()=>{const U="https://cdn.jsdelivr.net/npm/prismjs@1/prism.js";
+		const O=()=>{if(document.getElementById("offline-warning"))return;
+		document.body.insertAdjacentHTML("beforeend",`
+		<div id="offline-warning" style="position:fixed;inset:0;background:rgba(0,0,0,.85);color:#fff;z-index:999999;display:flex;align-items:center;justify-content:center;font-family:system-ui">
+		<div style="max-width:600px;background:#222;padding:2rem;border-radius:10px;text-align:center;box-shadow:0 0 30px #000">
+		<h2 style="margin:0 0 1rem;color:#ff6666">⚠ Eingeschränkte Anzeige</h2>
+		<p>Diese Anleitung verwendet externe Bibliotheken (CDNs).<br>Momentan können sie nicht geladen werden.</p>
+		<p style="opacity:.8">Ohne Internetverbindung fehlen Formatierung, Syntax-Highlighting und Funktionen.</p>
+		<div style="margin:1.5rem 0;display:flex;gap:1rem;justify-content:center">
+		<button id="r" style="padding:.6rem 1.2rem;border:0;border-radius:6px;background:#4caf50;font-weight:bold;cursor:pointer">🔄 Neu laden</button>
+		<button id="f" style="padding:.6rem 1.2rem;border:0;border-radius:6px;background:#ff9800;font-weight:bold;cursor:pointer">⚠ Trotzdem anzeigen</button>
+		</div>
+		<p style="opacity:.7;font-size:.9em">Bitte stelle eine Internetverbindung her und lade die Datei neu.</p>
+		</div></div>`);
+		document.getElementById("r").onclick=()=>location.reload();
+		document.getElementById("f").onclick=()=>document.getElementById("offline-warning").remove();
+		};
+		
+		addEventListener("DOMContentLoaded",()=>fetch(U,{method:"HEAD",cache:"no-store",mode:"no-cors"}).catch(O));
+		})();
+	</script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/setEntwicklung/ManualTemplate@main/styles.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/toolbar/prism-toolbar.css" />

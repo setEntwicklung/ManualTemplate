@@ -177,27 +177,23 @@
                 if (!pre) return;
 
                 ref.addEventListener("mouseenter", () => {
-                    // Highlight nur anzeigen, wenn nicht schon durch Klick fixiert
-                    showHighlight(ref, pre);
-                });
-                
-                ref.addEventListener("mouseleave", () => {
-                    // NUR löschen, wenn das Element NICHT aktiv (geklickt) ist
-                    if (!ref.classList.contains("is-active")) {
-                        clearHighlights(pre);
+                    if (ref.dataset.attr) highlightAttribute(pre, ref.dataset.attr);
+                    // Hier könnte man noch Zeilen-Highlights ergänzen falls nötig
+                    if (ref.dataset.line) {
+                        const ctx = getContext(pre);
+                        if (ctx) highlightLines(ctx, ref.dataset.line);
                     }
                 });
-                
-                ref.addEventListener("click", () => {
-                    // Alle anderen aktiven Zustände aufheben
-                    refs.forEach(r => r.classList.remove("is-active"));
-                
-                    // Aktuelles Element fixieren
-                    ref.classList.add("is-active");
-                
-                    // Highlight festsetzen
-                    clearHighlights(pre);
-                    showHighlight(ref, pre);
+
+                ref.addEventListener("mouseleave", () => {
+                    // Inline-Highlights entfernen
+                    pre.querySelectorAll(".code-inline-highlight").forEach(el => el.remove());
+
+                    // Zeilen-Highlights entfernen
+                    const ctx = getContext(pre);
+                    if (ctx) {
+                        ctx.layer.innerHTML = "";
+                    }
                 });
             });
         });

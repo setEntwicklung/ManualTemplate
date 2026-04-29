@@ -195,6 +195,20 @@
                         ctx.layer.innerHTML = "";
                     }
                 });
+
+                // NEU: Klick-Event für dauerhaftes Highlight
+                ref.addEventListener("click", () => {
+                // Optionale Bereinigung: Erst alle alten Highlights im Ziel entfernen
+                const ctx = getContext(pre);
+                if (ctx) {
+                    ctx.layer.innerHTML = ""; // Altes Zeilen-Highlight löschen
+                    pre.querySelectorAll(".code-inline-highlight").forEach(el => el.remove());
+                }
+                
+                // Highlight auslösen (nutzt deine vorhandenen Funktionen)
+                if (ref.dataset.attr) highlightAttribute(pre, ref.dataset.attr);
+                if (ref.dataset.line && ctx) highlightLines(ctx, ref.dataset.line);
+                });
             });
         });
 

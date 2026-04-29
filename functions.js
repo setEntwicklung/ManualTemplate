@@ -198,20 +198,6 @@
             });
         });
 
-        // Hilfsfunktionen zur Vermeidung von doppeltem Code
-        function showHighlight(ref, pre) {
-            if (ref.dataset.attr) highlightAttribute(pre, ref.dataset.attr);
-            if (ref.dataset.line) {
-                const ctx = getContext(pre);
-                if (ctx) highlightLines(ctx, ref.dataset.line);
-            }
-        }
-        
-        function clearHighlights(pre) {
-            pre.querySelectorAll(".code-inline-highlight").forEach(el => el.remove());
-            const ctx = getContext(pre);
-            if (ctx) ctx.layer.innerHTML = "";
-        }
         // Hilfsfunktion: Highlightet ein Attribut im Code
         function highlightAttribute(pre, attrName) {
             const code = pre.querySelector("code");

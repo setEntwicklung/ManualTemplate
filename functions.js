@@ -149,6 +149,7 @@
             // ==========================================
             const refs = document.querySelectorAll(".code-ref");
             const layers = new Map();
+            let activeRef = null;
 
             // Hilfsfunktion: Bereitet den Highlight-Layer für ein PRE-Element vor
             function getContext(pre) {
@@ -172,27 +173,63 @@
                 return ctx;
             }
 
+            // Funktion zum Zurücksetzen der Highlights
+            function clearAll(pre) {
+                if (!pre) return;
+                pre.querySelectorAll(".code-inline-highlight").forEach(el => el.remove());
+                const ctx = getContext(pre);
+                if (ctx) ctx.layer.innerHTML = "";
+            }
+        
+            // Funktion zum Aktivieren eines Highlights
+            function applyHighlight(ref) {
+                const pre = document.getElementById(ref.dataset.target);
+                if (!pre) return;
+                if (ref.dataset.attr) highlightAttribute(pre, ref.dataset.attr);
+                if (ref.dataset.line) {
+                    const ctx = getContext(pre);
+                    if (ctx) highlightLines(ctx, ref.dataset.line);
+                }
+            }
+                
             refs.forEach(ref => {
                 const pre = document.getElementById(ref.dataset.target);
                 if (!pre) return;
-
-                ref.addEventListener("mouseenter", () => {
-                    if (ref.dataset.attr) highlightAttribute(pre, ref.dataset.attr);
-                    // Hier könnte man noch Zeilen-Highlights ergänzen falls nötig
-                    if (ref.dataset.line) {
-                        const ctx = getContext(pre);
-                        if (ctx) highlightLines(ctx, ref.dataset.line);
+        
+                // CLICK: Umschalten des Status
+                ref.addEventListener("click", () => {
+                    if (activeRef === ref) {
+                        // Wenn schon aktiv: Deaktivieren
+                        activeRef = null;
+                        ref.classList.remove("is-active");
+                        clearAll(pre);
+                    } else {
+                        // Alle anderen deaktivieren
+                        refs.forEach(r => r.classList.remove("is-active"));
+                        // Neuen aktiv setzen
+                        activeRef = ref;
+                        ref.classList.add("is-active");
+                        clearAll(pre);
+                        applyHighlight(ref);
                     }
                 });
-
+        
+                // HOVER ENTER
+                ref.addEventListener("mouseenter", () => {
+                    // Wenn etwas anderes aktiv ist, altes Highlight kurz weg
+                    if (activeRef) {
+                        const activePre = document.getElementById(activeRef.dataset.target);
+                        clearAll(activePre);
+                    }
+                    applyHighlight(ref);
+                });
+        
+                // HOVER LEAVE
                 ref.addEventListener("mouseleave", () => {
-                    // Inline-Highlights entfernen
-                    pre.querySelectorAll(".code-inline-highlight").forEach(el => el.remove());
-
-                    // Zeilen-Highlights entfernen
-                    const ctx = getContext(pre);
-                    if (ctx) {
-                        ctx.layer.innerHTML = "";
+                    clearAll(pre);
+                    // Falls ein Element fixiert (active) ist, dieses wieder anzeigen
+                    if (activeRef) {
+                        applyHighlight(activeRef);
                     }
                 });
             });

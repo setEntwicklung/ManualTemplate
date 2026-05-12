@@ -379,8 +379,14 @@
             cursor: pointer;
         }
 
+        .code-ref.is-active {
+                stroke: white;
+                stroke-width: 2px;
+        }
+
             .code-ref:hover {
                 text-decoration: underline;
+                filter: brightness(1.3);
             }
 
         /* KEINE Unterstreichung in Tabellen */
